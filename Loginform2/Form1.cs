@@ -15,7 +15,7 @@ namespace Loginform2
     {
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent();                       
         }
 
         private void btnsubmit_Click(object sender, EventArgs e)
@@ -28,10 +28,51 @@ namespace Loginform2
             txtusername.Clear();
             txtpassword.Text = "";
             lbldisplay.Text = "Inserted Successfully";
-            lbldisplay.ForeColor = System.Drawing.Color.Red;
+            lbldisplay.ForeColor = System.Drawing.Color.Green;
             con.Close();
 
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string cs = "Server=ASHOK\\SQLEXPRESS; Initial Catalog=adonet; Trusted_Connection=true";
+            SqlConnection con = new SqlConnection(cs);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("update logininfo set password='"+txtpassword.Text+"'where username='"+txtusername.Text+"'", con);
+            cmd.ExecuteNonQuery();
+            txtusername.Clear();
+            txtpassword.Text = "";
+            lbldisplay.Text = "Updated Successfully";
+            lbldisplay.ForeColor = System.Drawing.Color.Blue;
+            con.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+                string cs = "Server=ASHOK\\SQLEXPRESS; Database=adonet; Integrated Security=true";
+                SqlConnection con = new SqlConnection(cs);
+                con.Open();
+                //SqlCommand cmd = new SqlCommand("delete from logininfo", con);
+                SqlCommand cmd = new SqlCommand("delete from logininfo where username='" + txtusername.Text + "'", con);
+                cmd.ExecuteNonQuery();
+                txtusername.Clear();
+                txtpassword.Text = "";
+                lbldisplay.Text = "Deleted  Successfully";
+                lbldisplay.ForeColor = System.Drawing.Color.Red;
+                con.Close();           
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string cs = "Server=ASHOK\\SQLEXPRESS; Initial Catalog=adonet; Integrated Security=true";
+            SqlConnection con = new SqlConnection(cs);
+            SqlDataAdapter da = new SqlDataAdapter("select * from logininfo", con);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            lbldisplay.Text = "Displaying Data in GridView";
+            lbldisplay.ForeColor = System.Drawing.Color.Purple;
+            datagridview1.DataSource = dt;            
         }
     }
 }
