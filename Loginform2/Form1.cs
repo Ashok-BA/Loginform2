@@ -115,7 +115,7 @@ namespace Loginform2
                 da.Fill(dt);
                 lbldisplay.Text = "Displaying Data in GridView";
                 lbldisplay.ForeColor = System.Drawing.Color.Purple;
-                datagridview1.DataSource = dt;
+                //datagridview1.DataSource = dt;
                 BindData();
             }
             catch(Exception)
