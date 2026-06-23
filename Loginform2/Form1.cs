@@ -15,9 +15,23 @@ namespace Loginform2
     {
         public Form1()
         {
-            InitializeComponent();                       
+            InitializeComponent();
+            
         }
 
+        public void BindData()
+        {
+            string cs = "Server=ASHOK\\SQLEXPRESS; Initial Catalog=adonet; Trusted_Connection=true";
+            SqlConnection con = new SqlConnection(cs);
+            SqlDataAdapter da = new SqlDataAdapter("select * from logininfo", con);
+            DataTable ds = new DataTable();
+            da.Fill(ds);
+            datagridview1.DataSource = ds;
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            BindData();
+        }
         private void btnsubmit_Click(object sender, EventArgs e)
         {
             try
@@ -34,6 +48,7 @@ namespace Loginform2
                 lbldisplay.Text = "Inserted Successfully";
                 lbldisplay.ForeColor = System.Drawing.Color.Green;
                 con.Close();
+                BindData();
             }
             catch(Exception)
             {
@@ -56,6 +71,8 @@ namespace Loginform2
                 lbldisplay.Text = "Updated Successfully";
                 lbldisplay.ForeColor = System.Drawing.Color.Blue;
                 con.Close();
+                BindData();
+
             }
             catch(Exception)
             {
@@ -77,7 +94,9 @@ namespace Loginform2
                 txtpassword.Text = "";
                 lbldisplay.Text = "Deleted  Successfully";
                 lbldisplay.ForeColor = System.Drawing.Color.Red;
+                
                 con.Close();
+                BindData();
             }
             catch(Exception)
             {
@@ -97,11 +116,14 @@ namespace Loginform2
                 lbldisplay.Text = "Displaying Data in GridView";
                 lbldisplay.ForeColor = System.Drawing.Color.Purple;
                 datagridview1.DataSource = dt;
+                BindData();
             }
             catch(Exception)
             {
                 lbldisplay.Text = "Enter proper valid Button";
             }
         }
+
+       
     }
 }
